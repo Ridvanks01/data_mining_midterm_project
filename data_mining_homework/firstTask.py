@@ -1,7 +1,9 @@
 # Importing Required Libraries
 # I installed the necessary libraries.
+
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
+from sklearn.tree import plot_tree
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix
 import seaborn as sns
@@ -24,6 +26,7 @@ y = heart_data['target']
 #3. Dividing the Data Set into Training and Testing Sets
 # I split the dataset here (%70 training data - %30 test data).
 # I selected number 58 for gaining the same outputs.
+
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=58)
 
 #4. Training Decision Tree Classifier
@@ -73,6 +76,21 @@ sns.heatmap(cm_rf, annot=True, fmt='d', cmap='Greens')
 plt.title("Confusion Matrix - Random Forest")
 plt.xlabel("Predicted")
 plt.ylabel("Actual")
+plt.show()
+
+# Decision Tree Visualization
+plt.figure(figsize=(20, 10))
+plot_tree(dt_model, filled=True, feature_names=X.columns, class_names=["No Heart Disease", "Heart Disease"])
+plt.title("Decision Tree Visualization")
+plt.show()
+
+# We Select First Tree in Random Forest
+first_tree = rf_model.estimators_[0]
+
+# Random Forest First Decision Tree Visualization
+plt.figure(figsize=(15, 10))
+plot_tree(first_tree, feature_names=X.columns, class_names=["No Heart Disease", "Heart Disease"], filled=True)
+plt.title("Random Forest - First Decision Tree Visualization")
 plt.show()
 
 #7. Summarizing Results
