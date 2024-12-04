@@ -5,6 +5,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.tree import plot_tree
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -59,7 +60,22 @@ rf_precision = precision_score(y_test, y_pred_rf)
 rf_recall = recall_score(y_test, y_pred_rf)
 rf_f1 = f1_score(y_test, y_pred_rf)
 
-#6. Visualizing Predictions
+#6. Training Support Vector Machine Classifier (SVM)
+# Creating the SVM Classifier model. I selected number 58 for gaining the same outputs.
+svm_model = SVC(random_state=58)
+# Training the SVM Classifier model.
+svm_model.fit(X_train, y_train)
+
+# Predicting using the SVM model
+y_pred_svm = svm_model.predict(X_test)
+
+# Calculating performance metrics for SVM
+svm_accuracy = accuracy_score(y_test, y_pred_svm)
+svm_precision = precision_score(y_test, y_pred_svm)
+svm_recall = recall_score(y_test, y_pred_svm)
+svm_f1 = f1_score(y_test, y_pred_svm)
+
+#7. Visualizing Predictions
 # Visualizing Confusion Matrix for Decision Tree
 cm_dt = confusion_matrix(y_test, y_pred_dt)
 plt.figure(figsize=(8, 6))
@@ -93,13 +109,22 @@ plot_tree(first_tree, feature_names=X.columns, class_names=["No Heart Disease", 
 plt.title("Random Forest - First Decision Tree Visualization")
 plt.show()
 
-#7. Summarizing Results
+# Visualizing Confusion Matrix for SVM
+cm_svm = confusion_matrix(y_test, y_pred_svm)
+plt.figure(figsize=(8, 6))
+sns.heatmap(cm_svm, annot=True, fmt='d', cmap='Oranges')
+plt.title("Confusion Matrix - SVM")
+plt.xlabel("Predicted")
+plt.ylabel("Actual")
+plt.show()
+
+#8. Summarizing Results
 results = {
-    "Model": ["Decision Tree", "Random Forest"],
-    "Accuracy": [dt_accuracy, rf_accuracy],
-    "Precision": [dt_precision, rf_precision],
-    "Recall": [dt_recall, rf_recall],
-    "F1 Score": [dt_f1, rf_f1]
+    "Model": ["Decision Tree", "Random Forest", "SVM"],
+    "Accuracy": [dt_accuracy, rf_accuracy, svm_accuracy],
+    "Precision": [dt_precision, rf_precision, svm_precision],
+    "Recall": [dt_recall, rf_recall, svm_recall],
+    "F1 Score": [dt_f1, rf_f1, svm_f1]
 }
 
 results_df = pd.DataFrame(results)
