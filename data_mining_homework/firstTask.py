@@ -1,6 +1,5 @@
 # Importing Required Libraries
 # I installed the necessary libraries.
-
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.tree import plot_tree
@@ -27,7 +26,6 @@ y = heart_data['target']
 #3. Dividing the Data Set into Training and Testing Sets
 # I split the dataset here (%70 training data - %30 test data).
 # I selected number 58 for gaining the same outputs.
-
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=58)
 
 #4. Training Decision Tree Classifier
